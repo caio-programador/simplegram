@@ -3,6 +3,7 @@ import styles from './PostDetails.module.css'
 import { useQuery } from '@tanstack/react-query'
 import { getPostById } from '../../services/post.service'
 import Message from '../Message'
+import Loading from '../Loading'
 
 const PostDetails = () => {
   const {id} = useParams()
@@ -10,7 +11,7 @@ const PostDetails = () => {
   const {data: post, error, isLoading} = useQuery({queryKey: ['post/getOne'], queryFn: () => getPostById(id!)})
 
   if(isLoading)
-    return <p>Carregando...</p>
+    return <Loading />
 
   return (
     <>

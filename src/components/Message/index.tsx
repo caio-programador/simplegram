@@ -5,7 +5,7 @@ type MessageProps = {
 
 const Message = ({msg, typeMsg}: MessageProps) => {
   return (
-    <div data-testId="message" className={'message ' + typeMsg}>
+    <div data-testid="message" className={'message ' + typeMsg}>
       <p>{msg}</p>
     </div>
   )

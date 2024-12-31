@@ -4,12 +4,13 @@ import { useQuery } from '@tanstack/react-query'
 import { getPosts } from '../../services/post.service'
 import Message from '../../components/Message'
 import Post from '../../components/Post'
+import Loading from '../../components/Loading'
 
 
 const Home = () => {
   const {data: posts, error, isLoading} = useQuery({queryKey: ['posts/getAll'], queryFn: getPosts})
   if(isLoading)
-    return <p>Carregando...</p>
+    return <Loading />
   return (
     <div className={styles.home}>
       <h2><IoIosHome/> Veja os melhores posts dos mais diversos assuntos</h2>

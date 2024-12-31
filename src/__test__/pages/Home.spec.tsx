@@ -41,7 +41,7 @@ describe("Home Component", () => {
 
     render(<Home/>)
 
-    const el = screen.getByText("Carregando...")
+    const el = screen.getByTestId("loading")
     expect(el).toBeInTheDocument()
   })
 

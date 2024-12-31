@@ -74,7 +74,7 @@ describe("PostDetails Component", () => {
         </MemoryRouter>
       </QueryClientProviderTest>
     )
-    const loading = await screen.findByText('Carregando...')
+    const loading = await screen.findByTestId('loading')
 
     expect(loading).toBeInTheDocument()
   })

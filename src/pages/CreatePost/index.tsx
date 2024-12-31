@@ -6,6 +6,7 @@ import Message from '../../components/Message'
 import Section from '../../components/Section'
 import IPost from '../../interfaces/Post'
 import { savePost } from '../../services/post.service'
+import Loading from '../../components/Loading'
 
 const CreatePost = () => {
   const titleRef = useRef<HTMLInputElement>(null)
@@ -88,6 +89,7 @@ const CreatePost = () => {
         {urlError && <Message msg={urlError} typeMsg='error' />}
         {error && <Message msg={error.message} typeMsg='error' />}
         {message && <Message msg={message} typeMsg='success' />}
+        {isPending && <Loading/>}
       </form>
     
     </div>
