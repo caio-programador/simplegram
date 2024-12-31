@@ -23,3 +23,10 @@
   font-size: 1.3em;
   font-weight: 100;
 }
+
+@media screen and (max-width: 512px) {
+  .post_details p{
+    font-size: 1.16em;
+    text-align: justify;
+  }
+}

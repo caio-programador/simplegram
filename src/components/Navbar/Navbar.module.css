@@ -1,5 +1,6 @@
 .navbar{
   display: flex;
+  flex-wrap: wrap;
   text-align: center;
   justify-content: space-between;
   padding: 30px 3%;
@@ -22,4 +23,21 @@
 .navbar .link a:hover{
   color: #b8c6b6;
   transition: .5s;
+}
+
+@media screen and (max-width: 512px) {
+  .navbar{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .link {
+    margin-top: 15px;
+  }
+
+  .navbar .link a{
+    padding: 0 9px;
+  }
 }

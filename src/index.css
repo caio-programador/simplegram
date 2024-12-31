@@ -77,3 +77,9 @@ input:focus{
   color: #c52722;
   border: 2px solid #c52722;
 }
+
+@media screen and (max-width: 768px){
+  .container{
+    padding: 0 4%;
+  }
+}
