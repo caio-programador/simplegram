@@ -1,0 +1,44 @@
+.about{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.values{
+  padding: 30px 0;
+  color: #f5f5f5;
+  text-align: center;
+}
+.values h2{
+  font-size: 1.9em;
+}
+
+.values .box_values{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.box_values .value{
+  margin: 15px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+}
+
+.value svg{
+  font-size: 4em;
+  color: #4e9843;
+}
+
+.value h3{
+  margin: 15px 0;
+  font-size: 1.5em;
+  font-weight: 400;
+  color: #4e9843;
+}
+
+.value p {
+  color: #ccc;
+}

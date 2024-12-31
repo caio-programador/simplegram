@@ -1,0 +1,67 @@
+{
+  "posts": [
+    {
+      "id": "5667",
+      "title": "dadsaadasdasd",
+      "description": "Após entrevista no podcast \"PodPah\", Gabigol confirmou que ocorreu uma proposta do Cruzeiro, mas que não aceitou ainda.",
+      "imageURL": "https://s2-extra.glbimg.com/aX7DAJ8xV0RIIJxxaUPy9PXFe2U=/0x0:1122x719/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f551ea7087a47f39ead75f64041559a/internal_photos/bs/2024/Y/E/pWtNQcR0CJkhPhiG19sg/gabigol.jpg"
+    },
+    {
+      "id": "97bb",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "d10c",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "c592",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "de46",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "65c6",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "6603",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "845b",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "ab23",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    },
+    {
+      "id": "63b7",
+      "title": "Post 1",
+      "description": "Teste",
+      "imageURL": "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

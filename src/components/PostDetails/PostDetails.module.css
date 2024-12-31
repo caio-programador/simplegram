@@ -1,0 +1,25 @@
+.post_details{
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0;
+  text-align: left;
+}
+
+.post_details img{
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.post_details h2{
+  color: #f5f5f5;
+  margin-top: 30px;
+  font-size: 2em;
+}
+
+.post_details p{
+  margin-top: 15px;
+  color: #d4d4d4;
+  font-size: 1.3em;
+  font-weight: 100;
+}

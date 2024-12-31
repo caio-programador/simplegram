@@ -1,0 +1,26 @@
+.post{
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  width: 32%;
+}
+.post img{
+  max-width: 100%;
+}
+.post h2{
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 15px 0;
+}
+
+
+@media screen and (max-width: 1024px){
+  .post{
+    width: 47%;
+  }
+}
+@media screen and (max-width: 768px){
+  .post{
+    width: 100%;
+  }
+}
