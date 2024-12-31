@@ -7,7 +7,7 @@ describe("CreatePost Page", () => {
     description: 'Teste de descrição sobre a vida'
   }
   beforeEach(() => {
-    cy.intercept('POST', '/posts', {statusCode: 201}).as("getAllPosts")
+    cy.intercept('POST', 'api/v1/posts', {statusCode: 201}).as("getAllPosts")
     cy.visit("/")
     cy.get('[href="/posts/create"]').click()
   })

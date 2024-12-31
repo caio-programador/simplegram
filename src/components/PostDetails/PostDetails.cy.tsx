@@ -13,7 +13,7 @@ describe("<PostDetails />", () => {
 
   it("should render the details of post", () => {
 
-    cy.intercept("GET", "/posts/undefined", {statusCode: 200, body: mockedPost}).as("getOnePost")
+    cy.intercept("GET", "api/v1/posts/undefined", {statusCode: 200, body: mockedPost}).as("getOnePost")
     cy.mount(
       <QueryClientProviderTest>
         <MemoryRouter initialEntries={[`posts/${mockedPost.id}`]}>

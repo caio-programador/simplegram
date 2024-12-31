@@ -15,7 +15,7 @@ describe("Home Page", () => {
     
   ]
   beforeEach(() => {
-    cy.intercept('GET', '/posts', {statusCode: 200, body: mockedPosts}).as("getAllPosts")
+    cy.intercept('GET', 'api/v1/posts', {statusCode: 200, body: mockedPosts}).as("getAllPosts")
     cy.visit("/")
   })
 
@@ -32,7 +32,7 @@ describe("Home Page", () => {
   })
 
   it("should click a post and show more details", () => {
-    cy.intercept('GET', '/posts/1', {statusCode: 200, body: mockedPosts[0]}).as("getOnePost")
+    cy.intercept('GET', 'api/v1/posts/1', {statusCode: 200, body: mockedPosts[0]}).as("getOnePost")
     cy.get(':nth-child(1) > .btn').click()
 
     cy.get('h2').should('be.visible')

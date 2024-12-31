@@ -13,7 +13,9 @@ jest.mock("@tanstack/react-query", () => ({
   useQueryClient: jest.fn(),
 
 }))
-
+jest.mock('../../config/db.config', () => ({
+  URL: "https://mockURL.com"
+}))
 jest.mock("../../services/post.service", () => ({
   ...jest.requireActual('../../services/post.service'),
   savePost: jest.fn()

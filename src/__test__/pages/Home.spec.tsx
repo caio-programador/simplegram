@@ -15,6 +15,11 @@ jest.mock("../../services/post.service", () => ({
   getPosts: jest.fn()
 }))
 
+
+jest.mock('../../config/db.config', () => ({
+  URL: "https://mockURL.com"
+}))
+
 describe("Home Component", () => {
 
   beforeEach(() => {

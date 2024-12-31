@@ -11,7 +11,7 @@ describe('<CreatePost/>', () => {
   }
 
   beforeEach(() => {
-    cy.intercept('POST', '/posts', {statusCode: 201}).as("getAllPosts")
+    cy.intercept('POST', 'api/v1/posts', {statusCode: 201}).as("getAllPosts")
     cy.mount(
       <QueryClientProviderTest>
         <CreatePost/>

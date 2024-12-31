@@ -18,6 +18,10 @@ jest.mock("../../services/post.service", () => ({
   getPostById: jest.fn()
 }))
 
+jest.mock('../../config/db.config', () => ({
+  URL: "https://mockURL.com"
+}))
+
 describe("PostDetails Component", () => {
   let mockPost: IPost
 

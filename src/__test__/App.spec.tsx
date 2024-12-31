@@ -9,6 +9,11 @@ jest.mock('@tanstack/react-query', () => ({
   })
 }))
 
+
+jest.mock('../config/db.config', () => ({
+  URL: "https://mockURL.com"
+}))
+
 describe("App", () => {
   it('Should render the App', () => {
     render(

@@ -22,7 +22,7 @@ describe("<Home />", () => {
   ] as IPost[]
 
   beforeEach(() => {
-    cy.intercept('GET', '/posts', {statusCode: 200, body: mockedPosts}).as("getAllPosts")
+    cy.intercept('GET', 'api/v1/posts', {statusCode: 200, body: mockedPosts}).as("getAllPosts")
     cy.mount(
     <QueryClientProviderTest>
       <MemoryRouter>

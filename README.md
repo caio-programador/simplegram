@@ -33,11 +33,17 @@ Simple Gram é um mini blog simples onde você pode postar qualquer coisa sem a 
    npm run dev
    ```
 
-3. Inicie o servidor da API:
+3. OPCIONAL: Inicie o servidor da API e crie um arquivo `.env` de acordo com o exemplo: `.env.example`:
 
    ```bash
    npm run server
    ```
+
+- Ou, utilize serviços terceiros para gerenciarem os dados, como MockAPI e JSONPlaceholder (Obs: eu optei por utilizar o MockAPI).
+
+Após isso, configure a nova URL no `.env`
+
+###
 
 4. Acesse a aplicação em: http://localhost:5173.
 
