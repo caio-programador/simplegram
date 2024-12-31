@@ -1,4 +1,4 @@
-export const URL = 'http://localhost:3000/posts/'
+export const URL = import.meta.env.VITE_API_URL
 
 export type RequestMethod = 'POST' | 'DELETE' | 'PUT' | 'GET'
 
