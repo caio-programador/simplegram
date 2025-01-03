@@ -28,12 +28,14 @@ describe("CreatePost Page", () => {
     cy.get(".btn").should("be.visible")
   })
 
-  it("should submit form with valid values", () => {
+  it("should submit form with valid values and return to home page", () => {
     cy.contains('Título:').type(post.title)
     cy.contains('Link da imagem:').type(post.imageURL)
     cy.contains('Descrição:').type(post.description)
     
     cy.get(".btn").click()
+
+    cy.contains("Veja os melhores posts dos mais diversos assuntos").should("be.visible")
   })
 
   it("should submit form with invalid values and show error", () => {

@@ -24,7 +24,7 @@ describe("Home Page", () => {
     cy.get('[href="/about"]').should('be.visible')
     cy.get('[href="/posts/create"]').should('be.visible')
 
-    cy.get('._logo_1hlt4_19 > a').should('be.visible')
+    cy.contains('SimpleGram').should('be.visible')
   })
 
   it("should habe at least one post", () => {
@@ -40,7 +40,7 @@ describe("Home Page", () => {
 
   it("should return to home page", () => {
     cy.get(':nth-child(1) > .btn').click()
-    cy.get('._logo_1hlt4_19 > a').click()
+    cy.contains('SimpleGram').click()
       .then( () => cy.url().should('equal', Cypress.config('baseUrl')+'/')
     )
   })

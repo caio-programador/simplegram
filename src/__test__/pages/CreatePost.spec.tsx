@@ -4,14 +4,13 @@ import QueryClientProviderTest from "../mocks/QueryClientProviderTest"
 import IPost from "../../interfaces/Post"
 import { savePost } from "../../services/post.service"
 import CreatePost from "../../pages/CreatePost"
-import React from "react"
+import { MemoryRouter, useNavigate } from "react-router"
 
 
 jest.mock("@tanstack/react-query", () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useMutation: jest.fn(),
   useQueryClient: jest.fn(),
-
 }))
 jest.mock('../../config/db.config', () => ({
   URL: "https://mockURL.com"
@@ -20,52 +19,59 @@ jest.mock("../../services/post.service", () => ({
   ...jest.requireActual('../../services/post.service'),
   savePost: jest.fn()
 }))
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
+  useNavigate: jest.fn()
+}))
+
 describe("CreatePost Page", () => {
 
   const mockMutate = jest.fn();
   const mockInvalidateQueries = jest.fn();
+  const mockNavigate = jest.fn()
 
   let mockPost: IPost
-  let mockMessage: string
 
 
   beforeEach(() => {
-    (useMutation as jest.Mock).mockImplementation(() => ({
-      mutate: mockMutate, isPending: false, data: mockMessage, error: null
-    }));
-    (useQueryClient as jest.Mock).mockImplementation(() => ({
-      invalidateQueries: mockInvalidateQueries.mockImplementation(async () => {})
-    }));
-    (savePost as jest.Mock).mockImplementation(() => ({
-      data: mockMessage
-    }))
-    jest.clearAllMocks()
-    mockMessage = 'Post criado com sucesso'
+    
     mockPost = {
       id: '1',
       title: 'Post 1',
       imageURL: 'https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/Reuters_Direct_Media/BrazilOnlineReportSportsNews/tagreuters.com2023binary_LYNXMPEJ5B0PM-FILEDIMAGE-e1697726921338.jpg?w=420&h=240&crop=1&quality=85',
       description: 'Description of Post 1'
-    }
+    };
+
+    (useMutation as jest.Mock).mockImplementation(() => ({
+      mutate: mockMutate, isPending: false, data: mockPost, error: null
+    }));
+    (useQueryClient as jest.Mock).mockImplementation(() => ({
+      invalidateQueries: mockInvalidateQueries.mockImplementation(async () => {})
+    }));
+    (savePost as jest.Mock).mockImplementation(() => ({
+      data: mockPost
+    }));
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+
+    jest.clearAllMocks()
+
+    
+    render(
+      <QueryClientProviderTest>
+        <MemoryRouter>
+          <CreatePost />
+        </MemoryRouter>
+      </QueryClientProviderTest>
+    );
     
   })
 
   it("should render create post correctly", async () => {
-    render(
-      <QueryClientProviderTest>
-        <CreatePost/>
-      </QueryClientProviderTest>
-    )
-    
-    expect(await screen.findByText('Crie seu post')).toBeInTheDocument()
+   expect(await screen.findByText('Crie seu post')).toBeInTheDocument()
   })
 
   it('should render all form inputs and submit button', async () => {
-    render(
-      <QueryClientProviderTest>
-        <CreatePost/>
-      </QueryClientProviderTest>
-    )
+    
     expect(await screen.findByLabelText("Título:")).toBeInTheDocument();
     expect(await screen.findByLabelText("Link da imagem:")).toBeInTheDocument();
     expect(await screen.findByLabelText("Descrição:")).toBeInTheDocument();
@@ -73,11 +79,7 @@ describe("CreatePost Page", () => {
   })
 
   it('should call mutate function when form is submitted with valid data', async () => {
-    render(
-      <QueryClientProviderTest>
-        <CreatePost/>
-      </QueryClientProviderTest>
-    )
+    
     fireEvent.change(screen.getByLabelText("Título:"), { target: { value: mockPost.title } });
     fireEvent.change(screen.getByLabelText("Link da imagem:"), { target: { value: mockPost.imageURL } });
     fireEvent.change(screen.getByLabelText("Descrição:"), { target: { value: mockPost.description } });
@@ -90,16 +92,9 @@ describe("CreatePost Page", () => {
       imageURL: mockPost.imageURL,
     }));
 
-    expect(await screen.findByText(mockMessage)).toBeInTheDocument()
   })
 
   it("should display error message for invalid image URL", async () => {
-    render(
-      <QueryClientProviderTest>
-        <CreatePost/>
-      </QueryClientProviderTest>
-    )
-
     fireEvent.change(screen.getByLabelText("Título:"), { target: { value: mockPost.title} });
     fireEvent.change(screen.getByLabelText("Link da imagem:"), { target: { value: "invalid-url" } });
     fireEvent.change(screen.getByLabelText("Descrição:"), { target: { value: mockPost.description } });
@@ -109,54 +104,55 @@ describe("CreatePost Page", () => {
     expect(await screen.findByTestId('message')).toBeInTheDocument();
   });
 
-  it("should disable the submit button while the mutation is pending", () => {
+  it("should disable the submit button and show loading while the mutation is pending", async () => {
     (useMutation as jest.Mock).mockImplementation(() => ({
       mutate: mockMutate,
       isPending: true,
       data: null,
       error: null,
     }));
-
+    
+    
     render(
       <QueryClientProviderTest>
-        <CreatePost/>
+        <MemoryRouter>
+          <CreatePost />
+        </MemoryRouter>
       </QueryClientProviderTest>
     );
+    
 
-    const submitButton = screen.getByRole("button", { name: 'Aguarde' });
+    const submitButton = screen.getByDisplayValue("Aguarde");
     expect(submitButton).toBeDisabled();
+
+    const loading = await screen.findByTestId('loading')
+    expect(loading).toBeInTheDocument()
   });
 
-  it("should disable the submit button while the mutation is pending", async () => {
+  it("should show error message when there is an error at useMutation returns", async () => {
     (useMutation as jest.Mock).mockImplementation(() => ({
       mutate: mockMutate,
       isPending: false,
       data: null,
-      error: {message: "Erro ao criar o post"},
+      error: true
     }));
 
     render(
       <QueryClientProviderTest>
-        <CreatePost/>
+        <MemoryRouter>
+          <CreatePost />
+        </MemoryRouter>
       </QueryClientProviderTest>
     );
 
-    fireEvent.change(screen.getByLabelText("Título:"), { target: { value: mockPost.title } });
-    fireEvent.change(screen.getByLabelText("Link da imagem:"), { target: { value: mockPost.imageURL } });
-    fireEvent.change(screen.getByLabelText("Descrição:"), { target: { value: mockPost.description } });
+    const error = await screen.findByTestId('message')
 
-    fireEvent.click(screen.getByRole("button", { name: "Postar" }));
+    expect(error).toBeInTheDocument()
 
-    expect(await screen.findByTestId('message')).toBeInTheDocument()
   });
   
   it("should clear the form after successful submission", async () => {
-    render(
-      <QueryClientProviderTest>
-        <CreatePost />
-      </QueryClientProviderTest>
-    );
-  
+     
     const titleInput = screen.getByLabelText("Título:") as HTMLInputElement;
     const imageUrlInput = screen.getByLabelText("Link da imagem:") as HTMLInputElement;
     const descriptionInput = screen.getByLabelText("Descrição:") as HTMLInputElement;
@@ -174,14 +170,9 @@ describe("CreatePost Page", () => {
     });
   });
 
-  it("should clear error and success messages after 2 seconds", async () => {
+  it("should clear error messages after 2 seconds", async () => {
     jest.useFakeTimers();
   
-    render(
-      <QueryClientProviderTest>
-        <CreatePost />
-      </QueryClientProviderTest>
-    );
   
     fireEvent.change(screen.getByLabelText("Título:"), { target: { value: mockPost.title } });
     fireEvent.change(screen.getByLabelText("Link da imagem:"), { target: { value: "invalid-url" } });
@@ -203,13 +194,6 @@ describe("CreatePost Page", () => {
 
 
   it("should call useMutation with params: {mutationFn: savePost, onSuccess: () => query.invalidateQueries({queryKey: ['posts/getAll']})}", async () => {
-    render(
-      <QueryClientProviderTest>
-        <CreatePost />
-      </QueryClientProviderTest>
-    );
-
-
     expect(useMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         mutationFn: expect.any(Function),
@@ -221,31 +205,21 @@ describe("CreatePost Page", () => {
     const resultMutation = mutationFn()
 
     expect(resultMutation).toEqual(await savePost(mockPost));
+
     (useMutation as jest.Mock).mock.calls[0][0].onSuccess();
 
     expect(mockInvalidateQueries).toHaveBeenCalledWith({
-      queryKey: ['posts/getAll']
+      queryKey: ['posts/getAll', 'post/getOne']
     })
 
+    expect(mockNavigate).toHaveBeenCalledWith('/')
+
   })
 
-  it("should [isPending, error, message] in dependency array of useEffect", () => {
-    
-    jest.mock('react', () => ({
-      ...jest.requireActual('react'),
-      useEffect: jest.fn(),
-    }))
-    const mockUseEffect = jest.spyOn(React, 'useEffect');
-    render(
-      <QueryClientProviderTest>
-        <CreatePost />
-      </QueryClientProviderTest>
-    );
-
-    expect(mockUseEffect).toHaveBeenCalledWith(expect.any(Function), [
-      expect.any(Boolean),
-      expect.any(Object),
-      expect.any(Object),
-    ]);
+  it("should not show loading when isPending is False", () => {
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
   })
+
+
+  
 })

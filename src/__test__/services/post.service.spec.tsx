@@ -94,12 +94,13 @@ describe('Post Service', () => {
         Promise.resolve({
           status: 201,
           statusText: 'Created',
+          json: () => Promise.resolve(newPost)
         })
       ) as jest.Mock;
 
       const result = await savePost(newPost);
       expect(fetch).toHaveBeenCalledWith('http://mocked-api-url/', expect.any(Object));
-      expect(result).toEqual('Post criado com sucesso');
+      expect(result).toBeUndefined();
     });
 
     it('should throw an error if the post cannot be saved', async () => {

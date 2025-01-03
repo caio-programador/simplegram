@@ -1,5 +1,5 @@
 import styles from './CreatePost.module.css'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, useRef, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Input from '../../components/Input'
 import Message from '../../components/Message'
@@ -7,6 +7,7 @@ import Section from '../../components/Section'
 import IPost from '../../interfaces/Post'
 import { savePost } from '../../services/post.service'
 import Loading from '../../components/Loading'
+import { useNavigate } from 'react-router'
 
 const CreatePost = () => {
   const titleRef = useRef<HTMLInputElement>(null)
@@ -14,12 +15,17 @@ const CreatePost = () => {
   const imageUrlRef = useRef<HTMLInputElement>(null)
 
   const [urlError, setUrlError] = useState<string | null>(null)
-  const [message, setMessage] = useState<string | null>(null)
+
+  const navigate = useNavigate()
 
   const query = useQueryClient()
-  const {mutate, isPending, data, error} = useMutation({
+  const {mutate, isPending, error} = useMutation({
     mutationFn: savePost,
-    onSuccess: () => query.invalidateQueries({queryKey: ['posts/getAll']})
+    onSuccess: () => {
+      query.invalidateQueries({queryKey: ['posts/getAll', 'post/getOne']})      
+      navigate("/")
+    }
+  
   })
 
   const handleSubmit = (e: FormEvent) => {
@@ -37,22 +43,19 @@ const CreatePost = () => {
       mutate(newPost)
       titleRef.current!.value = '' 
       descriptionRef.current!.value = '' 
-      imageUrlRef.current!.value = '' 
-      setMessage(data!)
+      imageUrlRef.current!.value = ''
+      
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setUrlError("URL de imagem inválida")
+      setTimeout(() => {
+        setUrlError(null)
+      }, 2000)
     }
 
 
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setUrlError(null)
-      setMessage(null)
-    }, 2000)
-  }, [isPending, error, message])
   return (
     <div className={styles.form}>
       <Section title='Crie seu post'>
@@ -88,7 +91,6 @@ const CreatePost = () => {
         <input className="btn" disabled={isPending} type="submit" value={isPending ? 'Aguarde' : 'Postar'} />
         {urlError && <Message msg={urlError} typeMsg='error' />}
         {error && <Message msg={error.message} typeMsg='error' />}
-        {message && <Message msg={message} typeMsg='success' />}
         {isPending && <Loading/>}
       </form>
     

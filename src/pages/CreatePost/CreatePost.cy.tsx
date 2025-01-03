@@ -1,3 +1,4 @@
+import { MemoryRouter } from "react-router"
 import CreatePost from "."
 import QueryClientProviderTest from "../../__test__/mocks/QueryClientProviderTest"
 import IPost from "../../interfaces/Post"
@@ -13,9 +14,11 @@ describe('<CreatePost/>', () => {
   beforeEach(() => {
     cy.intercept('POST', 'api/v1/posts', {statusCode: 201}).as("getAllPosts")
     cy.mount(
-      <QueryClientProviderTest>
-        <CreatePost/>
-      </QueryClientProviderTest>
+      <MemoryRouter>
+        <QueryClientProviderTest>
+          <CreatePost/>
+        </QueryClientProviderTest>
+      </MemoryRouter>
     )
   })
 

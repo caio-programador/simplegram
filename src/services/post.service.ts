@@ -45,11 +45,13 @@ export const savePost = async (data: IPost) => {
     const config = requestConfig<IPost>("POST", data)
 
     const response = await fetch(URL, config)
-
+    
     if(response.status != 201)
       throw Error(`Erro ${response.status}: ${response.statusText}`)
+    
+    
 
-    return 'Post criado com sucesso'
+    return
     
   } catch (error) {
     console.log(error);
