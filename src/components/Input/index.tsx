@@ -9,9 +9,9 @@ type InputProps = {
 
 const Input = forwardRef(({id, label, ...props}: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
   return (
-    <div className={styles.form_group}>
-      <label htmlFor={id}>{label}:</label>
-      <input id={id} {...props} ref={ref}/>
+    <div className={styles.form_group} >
+      <label  htmlFor={id}>{label}:</label>
+      <input className={props.className} id={id} {...props} ref={ref}/>
     </div>
   )
 })

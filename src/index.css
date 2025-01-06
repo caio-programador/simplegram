@@ -72,14 +72,16 @@ input:focus{
 }
 
 .error{
-  
   background-color: #d1a19f;
   color: #c52722;
   border: 2px solid #c52722;
 }
+
+
 
 @media screen and (max-width: 768px){
   .container{
     padding: 0 10%;
   }
 }
+

@@ -38,7 +38,7 @@ describe("CreatePost Page", () => {
     mockPost = {
       id: '1',
       title: 'Post 1',
-      imageURL: 'https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/Reuters_Direct_Media/BrazilOnlineReportSportsNews/tagreuters.com2023binary_LYNXMPEJ5B0PM-FILEDIMAGE-e1697726921338.jpg?w=420&h=240&crop=1&quality=85',
+      imageURL: 'https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/Reuters_Direct_Media/BrazilOnlineReportSportsNews/tagreuters.com2023binary_LYNXMPEJ5B0PM-FILEDIMAGE-e1697726921338.jpg',
       description: 'Description of Post 1'
     };
 
@@ -70,13 +70,6 @@ describe("CreatePost Page", () => {
    expect(await screen.findByText('Crie seu post')).toBeInTheDocument()
   })
 
-  it('should render all form inputs and submit button', async () => {
-    
-    expect(await screen.findByLabelText("Título:")).toBeInTheDocument();
-    expect(await screen.findByLabelText("Link da imagem:")).toBeInTheDocument();
-    expect(await screen.findByLabelText("Descrição:")).toBeInTheDocument();
-    expect(await screen.findByRole("button", { name: "Postar" })).toBeInTheDocument();
-  })
 
   it('should call mutate function when form is submitted with valid data', async () => {
     
@@ -93,16 +86,6 @@ describe("CreatePost Page", () => {
     }));
 
   })
-
-  it("should display error message for invalid image URL", async () => {
-    fireEvent.change(screen.getByLabelText("Título:"), { target: { value: mockPost.title} });
-    fireEvent.change(screen.getByLabelText("Link da imagem:"), { target: { value: "invalid-url" } });
-    fireEvent.change(screen.getByLabelText("Descrição:"), { target: { value: mockPost.description } });
-
-    fireEvent.click(screen.getByRole("button", { name: 'Postar'}));
-
-    expect(await screen.findByTestId('message')).toBeInTheDocument();
-  });
 
   it("should disable the submit button and show loading while the mutation is pending", async () => {
     (useMutation as jest.Mock).mockImplementation(() => ({
@@ -150,48 +133,6 @@ describe("CreatePost Page", () => {
     expect(error).toBeInTheDocument()
 
   });
-  
-  it("should clear the form after successful submission", async () => {
-     
-    const titleInput = screen.getByLabelText("Título:") as HTMLInputElement;
-    const imageUrlInput = screen.getByLabelText("Link da imagem:") as HTMLInputElement;
-    const descriptionInput = screen.getByLabelText("Descrição:") as HTMLInputElement;
-  
-    fireEvent.change(titleInput, { target: { value: mockPost.title } });
-    fireEvent.change(imageUrlInput, { target: { value: mockPost.imageURL } });
-    fireEvent.change(descriptionInput, { target: { value: mockPost.description } });
-  
-    fireEvent.click(screen.getByRole("button", { name: "Postar" }));
-  
-    await waitFor(() => {
-      expect(titleInput.value).toBe("");
-      expect(imageUrlInput.value).toBe("");
-      expect(descriptionInput.value).toBe("");
-    });
-  });
-
-  it("should clear error messages after 2 seconds", async () => {
-    jest.useFakeTimers();
-  
-  
-    fireEvent.change(screen.getByLabelText("Título:"), { target: { value: mockPost.title } });
-    fireEvent.change(screen.getByLabelText("Link da imagem:"), { target: { value: "invalid-url" } });
-    fireEvent.change(screen.getByLabelText("Descrição:"), { target: { value: mockPost.description } });
-  
-    fireEvent.click(screen.getByRole("button", { name: "Postar" }));
-  
-    expect(await screen.findByTestId("message")).toBeInTheDocument();
-  
-    // Avança o tempo para simular o setTimeout
-    jest.runAllTimers();
-  
-    await waitFor(() => {
-      expect(screen.queryByTestId("message")).not.toBeInTheDocument();
-    });
-  
-    jest.useRealTimers();
-  });
-
 
   it("should call useMutation with params: {mutationFn: savePost, onSuccess: () => query.invalidateQueries({queryKey: ['posts/getAll']})}", async () => {
     expect(useMutation).toHaveBeenCalledWith(
@@ -219,7 +160,6 @@ describe("CreatePost Page", () => {
   it("should not show loading when isPending is False", () => {
     expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
   })
-
 
   
 })

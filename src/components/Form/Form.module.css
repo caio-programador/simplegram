@@ -1,0 +1,7 @@
+.error_form{
+  display: block;
+  color: #c52722;
+  margin-top: 7px;
+  font-size: 1.1em;
+  transition: 1s;
+}

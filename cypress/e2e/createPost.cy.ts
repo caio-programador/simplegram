@@ -38,18 +38,37 @@ describe("CreatePost Page", () => {
     cy.contains("Veja os melhores posts dos mais diversos assuntos").should("be.visible")
   })
 
-  it("should submit form with invalid values and show error", () => {
-    cy.clock()
-
-    cy.contains('Título:').type(post.title)
-    cy.contains('Link da imagem:').type('sad')
-    cy.contains('Descrição:').type(post.description)
+  it("should show error for invalid image link", () => {
+    cy.get("#title").type(post.title)
+    cy.get("#imageUrl").type("post.imageURL", {delay: 0})
+    cy.get("#description").type(post.description)
 
     cy.get(".btn").click()
 
-    cy.get(".error").should("be.visible")
-    cy.tick(2000)
+    cy.contains("Por favor, insira um link válido para uma imagem!").should("be.visible")
+  })
 
+  it("should show required error for empty values", () => {
+    cy.get(".btn").click()
+
+    cy.get("[data-testid='error_form']").should("have.length", 3)
+
+    cy.contains("O título é obrigatório").should("be.visible")
+    cy.contains("O link da imagem é obrigatório").should("be.visible")
+    cy.contains("A descrição é obrigatória").should("be.visible")
+  })
+
+  it("should show min length error for title and description", () => {
+    cy.get("#title").type("a")
+    cy.get("#imageUrl").type(post.imageURL, {delay: 0})
+    cy.get("#description").type("a")
+    
+    cy.get(".btn").click()
+
+    cy.get("[data-testid='error_form']").should("be.visible").and('have.length', 2)
+
+    cy.contains("O título precisa ter no mínimo 3 caracteres").should("be.visible")
+    cy.contains("A descrição precisa ter no mínimo 3 caracteres").should("be.visible")
   })
 
 })

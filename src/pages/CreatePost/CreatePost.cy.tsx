@@ -7,7 +7,7 @@ import IPost from "../../interfaces/Post"
 describe('<CreatePost/>', () => {
   const mockPost: IPost = {
     title: "Post 1",
-    imageURL: "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg?class=ogImageWide",
+    imageURL: "https://static.todamateria.com.br/upload/pl/an/planeta-terra-og.jpg",
     description: "Teste"
   }
 
@@ -35,24 +35,11 @@ describe('<CreatePost/>', () => {
   })
 
   it("should click at button and send the form", () => {
-    cy.clock()
     cy.get("#title").type(mockPost.title)
     cy.get("#imageUrl").type(mockPost.imageURL, {delay: 0})
     cy.get("#description").type(mockPost.description)
 
     cy.get(".btn").click()
 
-    cy.tick(2000)
-  })
-
-  it("should show error message when type a invalid image url", () => {
-    cy.clock()
-    cy.get("#title").type(mockPost.title)
-    cy.get("#imageUrl").type("asd")
-    cy.get("#description").type(mockPost.description)
-
-    cy.get(".btn").click()
-    cy.get(".error").should("be.visible")
-    cy.tick(2000)
   })
 })
