@@ -27,7 +27,7 @@ const Form = ({handleForm, isPending}: FormProps) => {
         />
         {errors.title && <span data-testid="error_form" className={styles.error_form}>{errors.title.message}</span>}
 
-        <Input style={errors.title && {borderBottomColor: '#c52722', color: '#c52722'}}
+        <Input style={errors.imageURL && {borderBottomColor: '#c52722', color: '#c52722'}}
           id='imageUrl' 
           label='Link da imagem' 
           placeholder='Link da imagem do seu post...' 
@@ -38,7 +38,7 @@ const Form = ({handleForm, isPending}: FormProps) => {
         />
         {errors.imageURL && <span data-testid="error_form" className={styles.error_form}>{errors.imageURL.message}</span>}
 
-        <Input style={errors.title && {borderBottomColor: '#c52722', color: '#c52722'}}
+        <Input style={errors.description && {borderBottomColor: '#c52722', color: '#c52722'}}
           id='description' 
           label='Descrição' 
           placeholder='Descrição do seu post...' 
